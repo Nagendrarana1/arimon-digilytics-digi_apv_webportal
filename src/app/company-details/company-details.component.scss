@@ -1,0 +1,68 @@
+.company-details-container {
+  background: inherit;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.company-id {
+  color: gray;
+  font-size: 14px;
+}
+
+.alert {
+  background: #f0f6ff;
+  color: #0073e6;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.card {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.record {
+  background: #f9fbff;
+  border: 1px solid #d0e2ff;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.record:hover {
+  background: #eef6ff;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  background: #e6f0ff;
+  color: #0056cc;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.company-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

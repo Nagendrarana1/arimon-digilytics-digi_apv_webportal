@@ -1,0 +1,22 @@
+<om-particles
+  *ngIf="isBrowser"
+  [quantity]="200"
+  [size]="1.2"
+  [circleColor]="'#00bfff'"  
+  [staticity]="40"
+  [ease]="20"
+  [particleSpeed]="2"
+  [vx]="0.5"
+  [vy]="0.5"
+  styleClass="custom-particles"
+>
+
+<div class="home-container">
+  <h1>Welcome to Digi APV WebPortal</h1>
+  <p>Click below to view the tables page.</p>
+
+  <button type="button" (click)="goToTable()" class="go-btn">
+    Go to Tables
+  </button>
+</div>
+</om-particles>

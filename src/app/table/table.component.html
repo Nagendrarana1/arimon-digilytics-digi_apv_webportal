@@ -1,0 +1,57 @@
+<div class="container">
+  <!-- Reusable Header Component -->
+  <app-header
+    [title]="'Source Companies (' + companies.length + ')'"
+    [breadcrumbs]="[
+      { label: 'Home', url: '/home' },
+      { label: 'Company List' }
+    ]">
+  </app-header>
+  
+  <div class="company-details-container" >
+    <!-- Search -->
+    <input type="text" class="search-box" placeholder="Search companies..." [(ngModel)]="searchTerm" />
+
+    <!-- Info -->
+    <p class="results-info">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} –
+      {{ Math.min(currentPage * pageSize, filteredCompanies.length) }}
+      of {{ filteredCompanies.length }} companies
+    </p>
+
+    <!-- Table -->
+    <table class="company-table">
+      <thead>
+        <tr>
+          <th (click)="sort('no')">Source Company No</th>
+          <th (click)="sort('name')">Company Name</th>
+          <th (click)="sort('shareholders')">Company Shareholders</th>
+          <th (click)="sort('officers')">Company Officers</th>
+          <th (click)="sort('docs')">Shareholder Docs</th>
+        </tr>
+      </thead>
+      <tbody @rowAnimation @sortAnimation >
+        <tr 
+          *ngFor="let c of pagedCompanies; trackBy: trackByCompanyNo" 
+          (click)="openCompanyDetails(c)"
+          class="company-row">
+          <td>{{ c.no }}</td>
+          <td>{{ c.name }}</td>
+          <td><span class="badge">{{ c.shareholders }}</span></td>
+          <td><span class="badge">{{ c.officers }}</span></td>
+          <td>
+            <span class="badge">{{ c.docs.inc }} Inc</span>
+            <span class="badge">{{ c.docs.conf }} Conf</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination" @fadeIn>
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+  </div>
+</div>

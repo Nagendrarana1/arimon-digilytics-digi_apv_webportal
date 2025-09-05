@@ -1,0 +1,46 @@
+<div class="company-details-container" *ngIf="company" >
+
+  <!-- Generic Header -->
+  <app-header
+    [breadcrumbs]="[
+      { label: 'Home', url: '/' },
+      { label: 'Companies', url: '/table' },
+      { label: company.name }
+    ]"
+    [buttons]="[
+      { label: 'Officer-Linked View', icon: 'fa fa-arrow-left', type: 'secondary', action: 'Officer-Linked View' }
+    ]"
+    (buttonClick)="handleHeaderAction($event)">
+  </app-header>
+
+  <!-- Overlap alert -->
+  <div class="alert" *ngIf="overlapCount > 0"  @slideInDown>
+    <a href="#"> {{ overlapCount }} persons appear in both roles </a>
+  </div>
+
+  <div class="details-grid">
+    <!-- Shareholders -->
+    <div class="card" @staggerIn>
+      <h3>👤 Shareholders ({{ company.shareholders.length }})</h3>
+      <input type="text" placeholder="Search shareholders..." [(ngModel)]="shareholderSearch" />
+
+      <div *ngFor="let s of company.shareholders; trackBy: trackByShareholder" class="record" @listItemAnimation>
+        <div class="badge" *ngIf="s.isAlsoOfficer">Also Officer</div>
+        <p class="name">{{ s.name }}</p>
+        <small *ngIf="s.extractedFrom">Extracted from: {{ s.extractedFrom }}</small>
+      </div>
+    </div>
+
+    <!-- Officers -->
+    <div class="card">
+      <h3>⚖️ Officers ({{ company.officers.length }})</h3>
+      <input type="text" placeholder="Search officers..." [(ngModel)]="officerSearch" />
+
+      <div *ngFor="let o of company.officers; trackBy: trackByOfficer" class="record" @listItemAnimation>
+        <div class="badge" *ngIf="o.isAlsoShareholder">Also Shareholder</div>
+        <p class="name">{{ o.name }} <span *ngIf="o.role">({{ o.role }})</span></p>
+        <small *ngIf="o.source">Source: {{ o.source }}</small>
+      </div>
+    </div>
+  </div>
+</div>

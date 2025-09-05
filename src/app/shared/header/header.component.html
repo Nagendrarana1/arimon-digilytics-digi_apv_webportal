@@ -1,0 +1,49 @@
+<div class="header-container" [@headerContainer]>
+  <!-- Top Row: Breadcrumbs + Buttons -->
+  <div class="header-top">
+    <nav class="breadcrumbs">
+      <ng-container *ngFor="let crumb of breadcrumbs; let last = last; let i = index">
+        <a 
+          *ngIf="crumb.url && !last" 
+          [routerLink]="crumb.url" 
+          [@breadcrumbItem] 
+          [style.animation-delay.ms]="i * 100">
+          {{ crumb.label }}
+        </a>
+        <span 
+          *ngIf="!crumb.url || last" 
+          [@breadcrumbItem] 
+          [style.animation-delay.ms]="i * 100">
+          {{ crumb.label }}
+        </span>
+        <span 
+          *ngIf="!last" 
+          class="separator" 
+          [@breadcrumbItem] 
+          [style.animation-delay.ms]="i * 100 + 50">
+          /
+        </span>
+      </ng-container>
+    </nav>
+
+    <div class="header-actions">
+      <button 
+        *ngFor="let btn of buttons; let i = index" 
+        type="button" 
+        [ngClass]="btn.type || 'primary'"
+        (click)="onButtonClick(btn.action)"
+        [@buttonItem] 
+        [style.animation-delay.ms]="i * 100 + 300">
+        <i *ngIf="btn.icon" class="{{btn.icon}}"></i>
+        {{ btn.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Heading -->
+  @if(heading){
+    <div class="header-main" [@headingAnimation]>
+      <h1>{{ heading }}</h1>
+    </div>
+  }
+</div>

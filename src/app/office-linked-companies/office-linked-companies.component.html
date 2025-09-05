@@ -1,0 +1,78 @@
+<div class="container">
+  <!-- Reusable Generic Header -->
+  <app-header
+    [title]="'Officer-Linked Companies View'"
+    [breadcrumbs]="[
+      { label: 'APV - Portfolio Verification Dashboard', url: '/dashboard' },
+      { label: company.name, url: '/company-details' },
+      { label: 'Officer-Linked Companies' }
+    ]"
+    [buttons]="[
+      { label: '← Back to Company View', action: 'back', type: 'secondary' }
+    ]"
+    (buttonClick)="onHeaderButtonClick($event)">
+  </app-header>
+
+  <div class="content-grid">
+    <!-- Officers Column -->
+    <div class="column" [@listAnimation]>
+      <h3>Officers ({{ officers.length }})</h3>
+      <input
+        type="text"
+        placeholder="Search officers..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+      />
+
+      <div
+        class="person-card"
+        *ngFor="let officer of filteredOfficers"
+        [class.active]="selectedOfficer?.id === officer.id"
+        (click)="selectOfficer(officer)"
+         [@cardSelection]
+      >
+        <div class="person-name">{{ officer.name }}</div>
+        <div class="person-role">{{ officer.role }}</div>
+        <div class="company-count">{{ getLinkedCompaniesCount(officer) }} linked companies</div>
+      </div>
+    </div>
+
+    <!-- Linked Companies Column -->
+    <div class="column" *ngIf="selectedOfficer" [@listAnimation]>
+      <h3>Linked Companies</h3>
+      <div class="person-header">
+        <div>{{ selectedOfficer.name }}</div>
+        <div class="role">{{ selectedOfficer.role }}</div>
+      </div>
+
+      <div
+        class="company-card"
+        *ngFor="let company of linkedCompanies"
+        [class.active]="selectedCompany?.no === company.no"
+        (click)="selectCompany(company)"
+         [@cardSelection]
+      >
+        <div class="company-name">{{ company.name }}</div>
+        <div class="company-id">{{ company.no }}</div>
+        <div class="person-role">Director</div>
+        <div class="shareholders-count">{{ company.shareholders }} shareholders</div>
+        <div class="ownership">100%</div>
+      </div>
+    </div>
+
+    <!-- Shareholders Column -->
+    <div class="column" *ngIf="selectedCompany" [@listAnimation]>
+      <h3>Shareholders</h3>
+      <div class="shareholder-header">
+        {{ selectedCompany.name }} <br />
+        {{ selectedCompany.no }}
+      </div>
+      <button class="source-btn" routerLink="/shareholder-document-validation">View Source Document</button>
+
+      <div class="person-card" *ngFor="let shareholder of shareholders"  [@cardSelection]>
+        <div class="person-name">{{ shareholder.name }}</div>
+        <div class="extracted-from">Extracted from: {{ shareholder.extractedFrom }}</div>
+      </div>
+    </div>
+  </div>
+</div>

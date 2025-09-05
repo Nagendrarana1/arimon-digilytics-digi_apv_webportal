@@ -1,0 +1,60 @@
+<div class="container">
+  <!-- Reusable Header Component -->
+  <app-header
+    [breadcrumbs]="[
+      { label: 'APV - Portfolio Verification Dashboard', url: '/' },
+      { label: companyName, url: '/company-details' },
+      { label: 'Shareholder Document Validation' }
+    ]"
+    [buttons]="[
+      { label: '← Officer-Linked Companies View', type: 'secondary', action: 'back' }
+    ]"
+    (buttonClick)="onHeaderButtonClick($event)">
+  </app-header>
+
+  <!-- Content -->
+  <div class="content-grid">
+    <!-- Left Column (Shareholders) -->
+    <div class="column" [@listAnimation]>
+      <h3>Extracted Shareholders ({{ shareholders.length }})</h3>
+
+      <input 
+        type="text" 
+        placeholder="Search shareholders..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()">
+
+      <div class="records-info">
+        Showing {{ filteredShareholders.length }} of {{ shareholders.length }}
+      </div>
+
+      <div class="shareholder-card" *ngFor="let s of filteredShareholders">
+        <div class="person-name">{{ s.name }}</div>
+        <div class="address" *ngIf="s.address">
+          📍 {{ s.address }}
+        </div>
+        <div class="extracted" *ngIf="s.extractedFrom">
+          Extracted from: {{ s.extractedFrom }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column (Source Document) -->
+    <div class="column" [@fadeIn]>
+      <h3>Source Document</h3>
+      <p><strong>Document:</strong> {{ documentType }}</p>
+      <p><strong>Company:</strong> {{ companyName }}</p>
+      <p><strong>Last Updated:</strong> {{ lastUpdated }}</p>
+
+      <div class="pdf-viewer">
+        <i class="fas fa-file-pdf"></i>
+        <h4>PDF Document Viewer</h4>
+        <p>{{ companyName }}</p>
+        <small>
+          The PDF document would be embedded here, showing the specific 
+          pages and sections where shareholder information was extracted.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
